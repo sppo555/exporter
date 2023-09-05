@@ -29,6 +29,7 @@ func init() {
 func main() {
 	log.Printf("[%s] [INFO] Starting the application...", time.Now().Format(time.RFC3339))
 	go fetchMetrics()
+	go fetchJsonUrlMetrics()
 	go fetchFileMetrics()
 	alex_test.Set(123456)
 	http.Handle("/metrics", promhttp.Handler())
