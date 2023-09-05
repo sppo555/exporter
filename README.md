@@ -11,5 +11,5 @@ go build -o main .
 ```sh
 docker build -t custom-exporter .
 # Run
-docker run -d --name custom-exporter -p 8080:8080 -e RESOURCE_FILE=/app/test.txt -e RESOURCE_URL=http://RUI  custom-exporter
+docker run -d --name custom-exporter -p 8080:8080 -e RESOURCE_FILE=/app/test.txt -e RESOURCE_URL=http://URI  -e RESOURCE_JSON=http://URI custom-exporter
 ```
