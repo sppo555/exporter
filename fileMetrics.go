@@ -25,7 +25,7 @@ func init() {
 	METRICS_FILE = os.Getenv("RESOURCE_FILE")
 	if METRICS_FILE == "" {
 		// Handle the error if the environment variable is not set
-		log.Fatalf("[%s] [ERROR] RESOURCE_URL environment variable is not set", time.Now().Format(time.RFC3339))
+		log.Fatalf("[%s] [ERROR] RESOURCE_FILE environment variable is not set", time.Now().Format(time.RFC3339))
 	}
 }
 
