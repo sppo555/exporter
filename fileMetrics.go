@@ -21,6 +21,13 @@ type jsonMetrics struct {
 
 func init() {
 	log.SetFlags(0)
+
+	// 檢查 METRICS_FILE 環境變數是否被設定為 disable
+	if os.Getenv("METRICS_FILE") == "disable" {
+		log.Printf("[%s] [INFO] METRICS_FILE is set to disable, exiting initialization.", time.Now().Format(time.RFC3339))
+		return // 提前返回，不進行後續初始化
+	}
+
 	// export RESOURCE_FILE=/tmp/test.txt
 	METRICS_FILE = os.Getenv("RESOURCE_FILE")
 	if METRICS_FILE == "" {

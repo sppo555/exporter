@@ -16,7 +16,14 @@ type apiResponse struct {
 }
 
 func init() {
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	log.SetFlags(0)
+
+	if os.Getenv("METRICS_URL") == "disable" {
+		log.Printf("[%s] [INFO] METRICS_URL is set to disable, exiting initialization.", time.Now().Format(time.RFC3339))
+		resourceURL = "" // 將 resourceURL 設定為空字符串，後續邏輯中將跳過執行
+		return           // 提前返回，不進行後續的初始化操作
+	}
+
 	resourceURL = os.Getenv("RESOURCE_URL")
 	if resourceURL == "false" || resourceURL == "" {
 		log.Printf("[%s] [WARNING] RESOURCE_URL environment variable is not set or invalid, fetchMetrics will not run", time.Now().Format(time.RFC3339))

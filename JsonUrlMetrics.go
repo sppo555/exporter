@@ -16,6 +16,12 @@ var RESOURCE_JSON string
 
 func init() {
 	log.SetFlags(0)
+	// 檢查 METRICS_JSON 環境變數是否設定為 disable
+	if os.Getenv("METRICS_JSON") == "disable" {
+		log.Printf("[%s] [INFO] METRICS_JSON is set to disable, exiting initialization.", time.Now().Format(time.RFC3339))
+		return // 提前返回，不執行後續初始化代碼
+	}
+
 	// export RESOURCE_JSON=http://35.185.155.194/api/metrics/connection-numbers
 	RESOURCE_JSON = os.Getenv("RESOURCE_JSON")
 	if RESOURCE_JSON == "" {
