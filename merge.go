@@ -157,7 +157,7 @@ func MqConsumer() {
 			return
 		}
 
-		// 定义一个新的正则表达式来匹配 JSON 键，并且仅替换键中的"-"
+		// 定義一個新的正規表示式來匹配 JSON 鍵，並且僅替換鍵中的"-" 為"_"符合Prometheus的Metrics規格
 		reKey := regexp.MustCompile(`"(\w+)-(\w+)":`)
 		modifiedJSON := reKey.ReplaceAllString(string(finalJSON), `"${1}_${2}":`)
 
@@ -172,6 +172,7 @@ func MqConsumer() {
 	}
 }
 
+// findLatestClientID 尋找最新的 client_id 文件夾
 func findLatestClientID(basePath string) (string, error) {
 	infos, err := ioutil.ReadDir(basePath)
 	if err != nil {
@@ -195,6 +196,7 @@ func findLatestClientID(basePath string) (string, error) {
 	return latestClientID, nil
 }
 
+// findGroupName 尋找匹配的 group_name 文件夾
 func findGroupName(csOffset, clientID, basePath string) (string, error) {
 	clientDir := filepath.Join(basePath, clientID)
 	groupNames, err := ioutil.ReadDir(clientDir)
@@ -217,11 +219,13 @@ func findGroupName(csOffset, clientID, basePath string) (string, error) {
 	return matchingGroupName, nil
 }
 
+// getSourceContentURL  讀取os env MQ_NAMESERVER 組合來源內容的 URL
 func getSourceContentURL(groupName string) string {
 	mqNameserver := os.Getenv("MQ_NAMESERVER")
 	return fmt.Sprintf("http://%s/consumer/queryTopicByConsumer.query?consumerGroup=%s", mqNameserver, groupName)
 }
 
+// processSourceContent 處理來源內容數據，並計算總 BrokerOffset
 func processSourceContent(csOffset, clientID, groupName string, sourceContent SourceContent) int {
 	var totalBrokerOffset int
 
