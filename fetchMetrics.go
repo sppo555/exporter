@@ -12,7 +12,6 @@ import (
 var resourceURL string
 
 type apiResponse struct {
-	test
 	ConnectionNumbers float64 `json:"connectionNumbers"`
 }
 
